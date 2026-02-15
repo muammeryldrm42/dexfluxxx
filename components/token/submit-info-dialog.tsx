@@ -10,9 +10,10 @@ import { Label } from "@/components/ui/label";
 type Props = {
   defaultMint?: string;
   triggerLabel?: string;
+  triggerClassName?: string;
 };
 
-export function SubmitInfoDialog({ defaultMint, triggerLabel = "Update Profile" }: Props) {
+export function SubmitInfoDialog({ defaultMint, triggerLabel = "Update Profile", triggerClassName }: Props) {
   const [open, setOpen] = useState(false);
   const [mint, setMint] = useState(defaultMint || "");
   const [website_url, setWebsite] = useState("");
@@ -23,7 +24,6 @@ export function SubmitInfoDialog({ defaultMint, triggerLabel = "Update Profile" 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // keep mint synced when opening dialog from token page
     if (open && defaultMint) setMint(defaultMint);
   }, [open, defaultMint]);
 
@@ -34,7 +34,6 @@ export function SubmitInfoDialog({ defaultMint, triggerLabel = "Update Profile" 
       await axios.post("/api/submit", { mint, website_url, twitter_url, telegram_url, discord_url });
       setOpen(false);
 
-      // If this dialog is used inside the token page, refresh to show latest socials.
       if (defaultMint) {
         window.location.reload();
         return;
@@ -55,7 +54,7 @@ export function SubmitInfoDialog({ defaultMint, triggerLabel = "Update Profile" 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary">{triggerLabel}</Button>
+        <Button variant="secondary" className={triggerClassName}>{triggerLabel}</Button>
       </DialogTrigger>
 
       <DialogContent>

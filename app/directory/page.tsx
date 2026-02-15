@@ -50,7 +50,6 @@ export default function DirectoryPage() {
     };
   }, [debouncedQ, offset]);
 
-  // Fetch socials for current page
   useEffect(() => {
     (async () => {
       const mints = items.map((x) => x.mint);
@@ -73,47 +72,34 @@ export default function DirectoryPage() {
   const canNext = offset + limit < total;
 
   return (
-    <main className="min-h-screen">
+    <main className="grid-noise min-h-screen">
       <Navbar />
 
       <div className="mx-auto max-w-6xl px-4 py-6">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-xl font-semibold">Directory</h1>
-            <p className="text-sm text-muted-foreground">Search by name / symbol / mint. Filter by social coverage.</p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-2">
-              <Search className="h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search…"
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                className="border-0 bg-transparent focus-visible:ring-0"
-              />
+        <div className="rounded-2xl border border-primary/20 bg-card/50 p-4">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 className="font-mono text-sm uppercase tracking-[0.2em] text-primary">directory board</h1>
+              <p className="text-sm text-muted-foreground">Search name / symbol / mint and filter community coverage.</p>
             </div>
 
-            <div className="flex items-center gap-1 rounded-xl border border-border bg-card p-1">
-              <Filter className="ml-2 h-4 w-4 text-muted-foreground" />
-              <button
-                className={tabClass(mode === "all")}
-                onClick={() => setMode("all")}
-              >
-                All
-              </button>
-              <button
-                className={tabClass(mode === "with_socials")}
-                onClick={() => setMode("with_socials")}
-              >
-                With socials
-              </button>
-              <button
-                className={tabClass(mode === "missing_socials")}
-                onClick={() => setMode("missing_socials")}
-              >
-                Missing
-              </button>
+            <div className="flex flex-col gap-2 md:flex-row md:items-center">
+              <div className="flex items-center gap-2 rounded-lg border border-border bg-background/80 px-3 py-2">
+                <Search className="h-4 w-4 text-primary" />
+                <Input
+                  placeholder="Search token..."
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  className="h-7 min-w-[220px] border-0 bg-transparent p-0 font-mono text-sm focus-visible:ring-0"
+                />
+              </div>
+
+              <div className="flex items-center gap-1 rounded-lg border border-border bg-background/70 p-1">
+                <Filter className="ml-1 h-4 w-4 text-muted-foreground" />
+                <button className={tabClass(mode === "all")} onClick={() => setMode("all")}>All</button>
+                <button className={tabClass(mode === "with_socials")} onClick={() => setMode("with_socials")}>With socials</button>
+                <button className={tabClass(mode === "missing_socials")} onClick={() => setMode("missing_socials")}>Missing</button>
+              </div>
             </div>
           </div>
         </div>
@@ -122,15 +108,15 @@ export default function DirectoryPage() {
           <TokenTable items={filteredItems} metadataMap={metaMap} />
         </div>
 
-        <div className="mt-6 flex items-center justify-between text-sm text-muted-foreground">
+        <div className="mt-6 flex items-center justify-between font-mono text-xs text-muted-foreground">
           <span>
             Showing {Math.min(offset + 1, total)}–{Math.min(offset + limit, total)} of {total}
           </span>
           <div className="flex gap-2">
-            <button className="rounded-lg border border-border px-3 py-1 disabled:opacity-40" disabled={!canPrev} onClick={() => setOffset((v) => Math.max(v - limit, 0))}>
+            <button className="rounded-md border border-border px-3 py-1 text-foreground disabled:opacity-40" disabled={!canPrev} onClick={() => setOffset((v) => Math.max(v - limit, 0))}>
               Prev
             </button>
-            <button className="rounded-lg border border-border px-3 py-1 disabled:opacity-40" disabled={!canNext} onClick={() => setOffset((v) => v + limit)}>
+            <button className="rounded-md border border-border px-3 py-1 text-foreground disabled:opacity-40" disabled={!canNext} onClick={() => setOffset((v) => v + limit)}>
               Next
             </button>
           </div>
@@ -142,8 +128,8 @@ export default function DirectoryPage() {
 
 function tabClass(active: boolean) {
   return [
-    "rounded-lg px-2.5 py-1 text-xs transition",
-    active ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted/60",
+    "rounded-md px-2.5 py-1 text-xs transition",
+    active ? "bg-primary/15 text-primary" : "text-muted-foreground hover:bg-muted/60",
   ].join(" ");
 }
 
