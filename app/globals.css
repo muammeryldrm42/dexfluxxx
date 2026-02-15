@@ -3,37 +3,65 @@
 @tailwind utilities;
 
 :root {
-  --background: 222 47% 6%;
-  --foreground: 210 40% 98%;
-  --card: 222 47% 9%;
-  --card-foreground: 210 40% 98%;
-  --muted: 223 47% 12%;
-  --muted-foreground: 215 20% 65%;
-  --border: 223 30% 18%;
-  --input: 223 30% 18%;
-  --ring: 212 100% 60%;
-  --primary: 212 100% 60%;
-  --primary-foreground: 222 47% 10%;
-  --accent: 223 47% 12%;
-  --accent-foreground: 210 40% 98%;
+  --background: 120 9% 4%;
+  --foreground: 120 35% 91%;
+  --card: 120 8% 8%;
+  --card-foreground: 120 35% 91%;
+  --muted: 120 6% 12%;
+  --muted-foreground: 120 15% 65%;
+  --border: 120 14% 20%;
+  --input: 120 14% 20%;
+  --ring: 142 70% 58%;
+  --primary: 142 70% 58%;
+  --primary-foreground: 120 12% 8%;
+  --accent: 120 7% 14%;
+  --accent-foreground: 120 35% 91%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;
 }
 
 .dark {
-  --background: 222 47% 6%;
-  --foreground: 210 40% 98%;
+  --background: 120 9% 4%;
+  --foreground: 120 35% 91%;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
-  background: radial-gradient(1200px 800px at 20% 10%, rgba(40, 90, 255, 0.18), transparent 55%),
-              radial-gradient(900px 600px at 80% 30%, rgba(0, 220, 200, 0.12), transparent 55%),
-              hsl(var(--background));
   color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
+  background-image:
+    radial-gradient(circle at 25% 15%, rgba(53, 201, 124, 0.15), transparent 38%),
+    radial-gradient(circle at 82% 25%, rgba(44, 160, 184, 0.1), transparent 35%),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+  font-feature-settings: "ss01" 1;
 }
 
-a { color: inherit; }
+a {
+  color: inherit;
+}
+
+.grid-noise {
+  position: relative;
+}
+
+.grid-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.15;
+  background-image:
+    linear-gradient(rgba(104, 255, 170, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(104, 255, 170, 0.08) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
