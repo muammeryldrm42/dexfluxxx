@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
 import { Input } from "@/components/ui/input";
 import { TokenTable } from "@/components/token/token-table";
@@ -12,10 +11,7 @@ import { Filter, Search } from "lucide-react";
 type FilterMode = "all" | "with_socials" | "missing_socials";
 
 export default function DirectoryPage() {
-  const sp = useSearchParams();
-  const initialQ = sp.get("q") || "";
-
-  const [q, setQ] = useState(initialQ);
+  const [q, setQ] = useState("");
   const [items, setItems] = useState<TokenListItem[]>([]);
   const [total, setTotal] = useState(0);
   const [offset, setOffset] = useState(0);
@@ -24,6 +20,11 @@ export default function DirectoryPage() {
   const limit = 50;
 
   const debouncedQ = useDebouncedValue(q, 250);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setQ(params.get("q") || "");
+  }, []);
 
   useEffect(() => {
     setOffset(0);
